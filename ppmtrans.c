@@ -45,9 +45,10 @@ void apply90(int i, int j, A2 array2b, void *elem, void *cl)
         struct mappingCl *bundle = cl;
         A2Methods_T methods = bundle->methods;
         A2 newMap = bundle->newMap;
-        int *nump = elem;
+        struct Pnm_rgb *rgb = elem;
         int height = methods->height(array2b);
-        *(int *)methods->at(newMap, height - j - 1, i) = *(int *)nump;
+        *(struct Pnm_rgb *)methods->at(newMap, height - j - 1, i) 
+                                                       = *(struct Pnm_rgb *)rgb;
 }
 
 void apply180(int i, int j, A2 array2b, void *elem, void *cl)
@@ -55,11 +56,11 @@ void apply180(int i, int j, A2 array2b, void *elem, void *cl)
         struct mappingCl *bundle = cl;
         A2Methods_T methods = bundle->methods;
         A2 newMap = bundle->newMap;
-        int *nump = elem;
+        struct Pnm_rgb *rgb = elem;
         int width = methods->width(array2b);
         int height = methods->height(array2b);
-        *(int *)methods->at(newMap, width - i - 1, height - j - 1)
-                                                                 = *(int *)nump;
+        *(struct Pnm_rgb *)methods->at(newMap, width - i - 1, height - j - 1)
+                                                       = *(struct Pnm_rgb *)rgb;
 }
 
 void apply270(int i, int j, A2 array2b, void *elem, void *cl)
@@ -68,8 +69,9 @@ void apply270(int i, int j, A2 array2b, void *elem, void *cl)
         A2Methods_T methods = bundle->methods;
         A2 newMap = bundle->newMap;
         int width = methods->width(array2b);
-        int *nump = elem;
-        *(int *)methods->at(newMap, j, width - i - 1) = *(int *)nump;
+        struct Pnm_rgb *rgb = elem;
+        *(struct Pnm_rgb *)methods->at(newMap, j, width - i - 1)
+                                                       = *(struct Pnm_rgb *)rgb;
 }
 
 void rotate(Pnm_ppm ppmMap, int rotation, A2Methods_mapfun *map, 
@@ -89,7 +91,7 @@ void rotate(Pnm_ppm ppmMap, int rotation, A2Methods_mapfun *map,
                 newHeight = methods->height(ppmMap->pixels);
         }
         
-        A2 newMap = methods->new(newWidth, newHeight, sizeof(unsigned));
+        A2 newMap = methods->new(newWidth, newHeight, sizeof(struct Pnm_rgb));
         struct mappingCl bundle = {newMap, methods};
         
         if (rotation == 90) {
@@ -99,7 +101,11 @@ void rotate(Pnm_ppm ppmMap, int rotation, A2Methods_mapfun *map,
         } else if (rotation == 270) {
                 map(ppmMap->pixels, apply270, &bundle);
         }
-        Pnm_ppmwrite(stdout, newMap);
+        //methods->free(ppmMap->pixels);
+        ppmMap->width = newWidth;
+        ppmMap->height = newHeight;
+        ppmMap->pixels = newMap; 
+        Pnm_ppmwrite(stdout, ppmMap);
 }
 int main(int argc, char *argv[])
 {
@@ -169,6 +175,8 @@ int main(int argc, char *argv[])
         }
 
         Pnm_ppm ppmMap = Pnm_ppmread(fp, methods);
+        fclose(fp);
+
         rotate(ppmMap, rotation, map, methods);
 
         (void) time_file_name;

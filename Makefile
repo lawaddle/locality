@@ -75,4 +75,3 @@ ppmtrans: ppmtrans.o cputiming.o uarray2b.o uarray2.o a2plain.o
 
 clean:
 	rm -f ppmtrans a2test timing_test *.o
-

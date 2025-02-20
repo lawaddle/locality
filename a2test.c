@@ -77,7 +77,7 @@ typedef A2Methods_UArray2 A2;
 //         methods->free(&array);
 // }
 
-#if 0
+#if 1
 static void show(int i, int j, A2 a, void *elem, void *cl) 
 {
         (void)a; (void)cl;
