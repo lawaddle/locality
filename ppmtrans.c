@@ -108,7 +108,6 @@ void rotate(Pnm_ppm ppmMap, int rotation, A2Methods_mapfun *map,
         ppmMap->pixels = newMap; 
         Pnm_ppmwrite(stdout, ppmMap);
 }
-
 int main(int argc, char *argv[])
 {
         char *time_file_name = NULL;

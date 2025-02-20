@@ -24,7 +24,9 @@ IFLAGS = -I/comp/40/build/include -I/usr/sup/cii40/include/cii
 # to use the GNU 99 standard to get the right items in time.h for the
 # the timing support to compile.
 # 
-CFLAGS = -g -std=gnu99 -Wall -Wextra -Werror -Wfatal-errors -pedantic $(IFLAGS)
+CFLAGS = -g -std=gnu99 -Wall -Wextra -Werror  -pedantic $(IFLAGS)
+
+#-Wfatal-errors
 
 
 # Linking flags
@@ -74,4 +76,3 @@ ppmtrans: ppmtrans.o cputiming.o uarray2b.o uarray2.o a2plain.o
 
 clean:
 	rm -f ppmtrans a2test timing_test *.o
-
