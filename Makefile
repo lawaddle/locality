@@ -24,7 +24,7 @@ IFLAGS = -I/comp/40/build/include -I/usr/sup/cii40/include/cii
 # to use the GNU 99 standard to get the right items in time.h for the
 # the timing support to compile.
 # 
-CFLAGS = -g -std=gnu99 -Wall -Wextra -Werror  -pedantic $(IFLAGS)
+CFLAGS = -g -std=gnu99 -Wall -Wextra -Werror -Wfatal-errors -pedantic $(IFLAGS)
 
 #-Wfatal-errors
 
