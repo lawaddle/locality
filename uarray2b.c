@@ -170,6 +170,7 @@ void Uapply(int col, int row, UArray2_T array2, void *elem, void *cl)
         for (int i = 0; i < UArray_length(*inner); i++)
         {
                 void *curr = UArray_at(*inner, i);
+                
                 int vcol = col * blocksize + (i / blocksize);
                 int vrow = row * blocksize + (i % blocksize);
                 //fprintf(stderr, "Current Val: %05u\n", *(int *)curr);

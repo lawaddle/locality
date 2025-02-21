@@ -28,7 +28,6 @@ CFLAGS = -g -std=gnu99 -Wall -Wextra -Werror  -pedantic $(IFLAGS)
 
 #-Wfatal-errors
 
-
 # Linking flags
 # Set debugging information and update linking path
 # to include course binaries and CII implementations
