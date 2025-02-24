@@ -51,7 +51,8 @@ typedef void (*Apply)(int col, int row, T array2b, void *elem, void *cl);
  * every element in a block, block by block.
  */
 struct expandedcl {
-        Apply apply;    /* apply function passed into UArray2b_map, so the apply 
+        Apply apply;    /* apply function passed into UArray2b_map, so the 
+        apply
                          * function can be used on each element in a block */
         void *cl;       /* original closure passed into UArray2b_map */
         T uarray2b;     /* 2d blocked array being mapped over */
@@ -82,7 +83,8 @@ struct expandedcl {
  *      - Calls a CRE when blocksize is less than 1
  *      - Calls a CRE if fails to allocate memory for the UArray2b
  *      - Allocates memory for the UArray2b pointer, the Uarray2 inside it, 
- *      and the uarrays representing each block for each element of the Uarray2.
+ *      and the uarrays representing each block for each element of the 
+ * Uarray2.
  *      User is responsible for calling UArray2b_free to free this memory.
  *      
  ************************/
@@ -104,7 +106,7 @@ T    UArray2b_new (int width, int height, int size, int blocksize)
         float fheight = height;
 
         /* to fit every element in a block, you need the width and height of 
-         * the outer 2d array to be the ceilings of the width and height of the 
+         * the outer 2d array to be the ceilings of the width and height of the
          * total 2d blocked array divided by the blocksize*/
         array2b->array = UArray2_new(ceil(fwidth / blocksize), 
                                      ceil(fheight / blocksize), 
@@ -114,10 +116,10 @@ T    UArray2b_new (int width, int height, int size, int blocksize)
         {
                 for (int j = 0; j < UArray2_height(array2b->array); j++)
                 {
-                        /* making and populating a uarray for each block of the u
+                        /* making and populating a uarray for each block of the
                          * array2b */
                         UArray_T uarray = UArray_new(blocksize * blocksize, 
-                                                                          size);
+                                                                        size);
                         UArray_T *value = 
                                 (UArray_T *) UArray2_at(array2b->array, i, j);
                         *value = uarray;
@@ -150,7 +152,7 @@ T    UArray2b_new (int width, int height, int size, int blocksize)
  *      - Calls a CRE when size is less than 1
  *      - Calls a CRE if fails to allocate memory for the UArray2b
  *      - Calls UArray2b_new that allocates memory for the UArray2b pointer, 
- *      the Uarray2 inside it, and the uarrays representing each block for each 
+ *      the Uarray2 inside it, and the uarrays representing each block for each
  *      element of the Uarray2. User is responsible for calling UArray2b_free 
  *      to free this memory.
  *      
@@ -181,7 +183,8 @@ T  UArray2b_new_64K_block(int width, int height, int size)
  *      void *cl:               closure for mapping function, will be voided
  * Return: n/a
  *
- * Expects: uarray2 and element to not be NULL; the column and row values not to
+ * Expects: uarray2 and element to not be NULL; the column and row values not 
+ *              to
  *          be out of bounds of the range for the inputted 2d blocked uarray
  *      
  * Notes: 
@@ -189,7 +192,8 @@ T  UArray2b_new_64K_block(int width, int height, int size)
  *              - uarray2 or element is null
  *              - row is less than 0 or greater or equal to the height of the 
  *               image (number of rows of the 2d blocked uarray)
- *              - column is less than 0 or greater or equal to the width of the 
+ *              - column is less than 0 or greater or equal to the width of 
+ * the 
  *               image (number of columns of the 2d blocked uarray)
  *      - Frees the uarray located at (col, row) of uarray2.
  ************************/
@@ -287,7 +291,8 @@ int   UArray2b_height(T array2b)
  *      T uarray2b:     a pointer to the UArray2b_T Struct representing
  *                      the UArray2b being accessed 
  *
- * Return: the memory size (number of bytes occupied) for an element in uarray2b
+ * Return: the memory size (number of bytes occupied) for an element in 
+ * uarray2b
  *
  * Expects: uarray2b to not be NULL
  *      
@@ -380,7 +385,8 @@ void *UArray2b_at(T array2b, int column, int row)
  * Return: none
  *
  * Expects: array2, elem, and cl to not be null; the column and row values not 
- *          to be out of bounds of the range for the inputted 2d blocked uarray;
+ *          to be out of bounds of the range for the inputted 2d blocked 
+ * uarray;
  *          the value of bit to be 0 or 1; apply and array2b in expandedcl 
  *          bundle are not null; blocksize in expandedcl is greater than  0
  *      
@@ -389,7 +395,7 @@ void *UArray2b_at(T array2b, int column, int row)
  *              - array2, elem, or cl are null
  *              - row is less than 0 or greater or equal to the height of the 
  *               image (number of rows of the 2d blocked uarray)
- *              - column is less than 0 or greater or equal to the width of the 
+ *              - column is less than 0 or greater or equal to the width of the
  *               image (number of columns of the 2d blocked uarray)
  *              - contents of expandedcl bundle are invalid:
  *                      - apply or array2b are null
@@ -449,7 +455,8 @@ void Uapply(int col, int row, UArray2_T array2, void *elem, void *cl)
  *              T uarray2b:             a pointer to the uarray2b being 
  *                                      traversed
  *              void *element:          the current element of the iteration
- *              void *cl:               a variable representing the closure that
+ *              void *cl:               a variable representing the closure 
+ * that
  *                                      can be updated during a given traversal
  *      
  *      void *cl:               a void pointer representing the closure which is
@@ -468,13 +475,14 @@ void Uapply(int col, int row, UArray2_T array2, void *elem, void *cl)
  ************************/
 void  UArray2b_map(T array2b, 
                 void (*apply)(int col, int row, T array2b, void *elem, 
-                                                                      void *cl),
+                                                                void *cl),
                 void *cl)
 {
         assert(array2b != NULL);
         assert(apply != NULL);
         /**
-         * Values needed to pass into the UArray2_map_row_major closure, so each
+         * Values needed to pass into the UArray2_map_row_major closure, so
+         *  each
          * block, and thus each element in a block would have access to these
          * values:
          *      - The apply function, so it actually runs on each element

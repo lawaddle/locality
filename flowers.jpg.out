@@ -1,0 +1,92 @@
+## NAME: flowers.jpg
+## SIZE: 126199 bytes
+### ROW MAJOR ###
+rotate 0 -row-major
+Total time: 1338
+Time Per Pixel: 0
+
+rotate 90 -row-major
+Total time: 20499415
+Time Per Pixel: 55
+
+rotate 270 -row-major
+Total time: 20399217
+Time Per Pixel: 55
+
+rotate 180 -row-major
+Total time: 23218877
+Time Per Pixel: 62
+
+horizontal -row-major
+Total time: 20040565
+Time Per Pixel: 54
+
+vertical -row-major
+Total time: 19984246
+Time Per Pixel: 53
+
+transpose -row-major
+Total time: 19671029
+Time Per Pixel: 53
+
+
+COL MAJOR
+rotate 0 -col-major
+Total time: 1192
+Time Per Pixel: 0
+
+rotate 90 -col-major
+Total time: 23346102
+Time Per Pixel: 62
+
+rotate 270 -col-major
+Total time: 23982875
+Time Per Pixel: 64
+
+rotate 180 -col-major
+Total time: 25228152
+Time Per Pixel: 68
+
+horizontal -col-major
+Total time: 25076618
+Time Per Pixel: 67
+
+vertical -col-major
+Total time: 27473091
+Time Per Pixel: 74
+
+transpose -col-major
+Total time: 21443564
+Time Per Pixel: 57
+
+
+BLOCK MAJOR
+rotate 0 -block-major
+Total time: 1301
+Time Per Pixel: 0
+
+rotate 90 -block-major
+Total time: 29196345
+Time Per Pixel: 78
+
+rotate 270 -block-major
+Total time: 33467273
+Time Per Pixel: 90
+
+rotate 180 -block-major
+Total time: 31877762
+Time Per Pixel: 85
+
+horizontal -block-major
+Total time: 33776898
+Time Per Pixel: 90
+
+vertical -block-major
+Total time: 29574536
+Time Per Pixel: 79
+
+transpose -block-major
+Total time: 29549818
+Time Per Pixel: 79
+
+

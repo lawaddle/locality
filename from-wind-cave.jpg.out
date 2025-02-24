@@ -1,0 +1,92 @@
+## NAME: from-wind-cave.jpg
+## SIZE: 46152 bytes
+### ROW MAJOR ###
+rotate 0 -row-major
+Total time: 1545
+Time Per Pixel: 0
+
+rotate 90 -row-major
+Total time: 20489506
+Time Per Pixel: 55
+
+rotate 270 -row-major
+Total time: 22112599
+Time Per Pixel: 59
+
+rotate 180 -row-major
+Total time: 22478356
+Time Per Pixel: 60
+
+horizontal -row-major
+Total time: 20277142
+Time Per Pixel: 54
+
+vertical -row-major
+Total time: 19815903
+Time Per Pixel: 53
+
+transpose -row-major
+Total time: 18403087
+Time Per Pixel: 49
+
+
+COL MAJOR
+rotate 0 -col-major
+Total time: 1279
+Time Per Pixel: 0
+
+rotate 90 -col-major
+Total time: 23201972
+Time Per Pixel: 62
+
+rotate 270 -col-major
+Total time: 22692437
+Time Per Pixel: 61
+
+rotate 180 -col-major
+Total time: 26122581
+Time Per Pixel: 70
+
+horizontal -col-major
+Total time: 24279088
+Time Per Pixel: 65
+
+vertical -col-major
+Total time: 24792158
+Time Per Pixel: 66
+
+transpose -col-major
+Total time: 21012280
+Time Per Pixel: 56
+
+
+BLOCK MAJOR
+rotate 0 -block-major
+Total time: 1494
+Time Per Pixel: 0
+
+rotate 90 -block-major
+Total time: 31384393
+Time Per Pixel: 84
+
+rotate 270 -block-major
+Total time: 32550061
+Time Per Pixel: 87
+
+rotate 180 -block-major
+Total time: 36624775
+Time Per Pixel: 98
+
+horizontal -block-major
+Total time: 30692001
+Time Per Pixel: 82
+
+vertical -block-major
+Total time: 29084864
+Time Per Pixel: 78
+
+transpose -block-major
+Total time: 27317840
+Time Per Pixel: 73
+
+

@@ -1,0 +1,92 @@
+## NAME: halligan.jpg
+## SIZE: 59722 bytes
+### ROW MAJOR ###
+rotate 0 -row-major
+Total time: 1091
+Time Per Pixel: 0
+
+rotate 90 -row-major
+Total time: 7823481
+Time Per Pixel: 55
+
+rotate 270 -row-major
+Total time: 8367346
+Time Per Pixel: 58
+
+rotate 180 -row-major
+Total time: 8897678
+Time Per Pixel: 62
+
+horizontal -row-major
+Total time: 8181437
+Time Per Pixel: 57
+
+vertical -row-major
+Total time: 7783535
+Time Per Pixel: 54
+
+transpose -row-major
+Total time: 6983924
+Time Per Pixel: 49
+
+
+COL MAJOR
+rotate 0 -col-major
+Total time: 1233
+Time Per Pixel: 0
+
+rotate 90 -col-major
+Total time: 9317059
+Time Per Pixel: 65
+
+rotate 270 -col-major
+Total time: 8733068
+Time Per Pixel: 61
+
+rotate 180 -col-major
+Total time: 11018365
+Time Per Pixel: 77
+
+horizontal -col-major
+Total time: 9966547
+Time Per Pixel: 70
+
+vertical -col-major
+Total time: 9383234
+Time Per Pixel: 66
+
+transpose -col-major
+Total time: 8478724
+Time Per Pixel: 59
+
+
+BLOCK MAJOR
+rotate 0 -block-major
+Total time: 1004
+Time Per Pixel: 0
+
+rotate 90 -block-major
+Total time: 10616870
+Time Per Pixel: 74
+
+rotate 270 -block-major
+Total time: 11315059
+Time Per Pixel: 79
+
+rotate 180 -block-major
+Total time: 11871419
+Time Per Pixel: 83
+
+horizontal -block-major
+Total time: 11315772
+Time Per Pixel: 79
+
+vertical -block-major
+Total time: 10670716
+Time Per Pixel: 75
+
+transpose -block-major
+Total time: 10231549
+Time Per Pixel: 72
+
+

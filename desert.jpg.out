@@ -1,0 +1,92 @@
+## NAME: desert.jpg
+## SIZE: 155174 bytes
+### ROW MAJOR ###
+rotate 0 -row-major
+Total time: 1612
+Time Per Pixel: 0
+
+rotate 90 -row-major
+Total time: 25543428
+Time Per Pixel: 68
+
+rotate 270 -row-major
+Total time: 23548483
+Time Per Pixel: 63
+
+rotate 180 -row-major
+Total time: 22591042
+Time Per Pixel: 60
+
+horizontal -row-major
+Total time: 21121106
+Time Per Pixel: 57
+
+vertical -row-major
+Total time: 20661467
+Time Per Pixel: 55
+
+transpose -row-major
+Total time: 19821317
+Time Per Pixel: 53
+
+
+COL MAJOR
+rotate 0 -col-major
+Total time: 1545
+Time Per Pixel: 0
+
+rotate 90 -col-major
+Total time: 25018251
+Time Per Pixel: 67
+
+rotate 270 -col-major
+Total time: 25847113
+Time Per Pixel: 69
+
+rotate 180 -col-major
+Total time: 28078406
+Time Per Pixel: 75
+
+horizontal -col-major
+Total time: 26955411
+Time Per Pixel: 72
+
+vertical -col-major
+Total time: 25987141
+Time Per Pixel: 70
+
+transpose -col-major
+Total time: 31806326
+Time Per Pixel: 85
+
+
+BLOCK MAJOR
+rotate 0 -block-major
+Total time: 1355
+Time Per Pixel: 0
+
+rotate 90 -block-major
+Total time: 32351203
+Time Per Pixel: 87
+
+rotate 270 -block-major
+Total time: 31805738
+Time Per Pixel: 85
+
+rotate 180 -block-major
+Total time: 34405594
+Time Per Pixel: 92
+
+horizontal -block-major
+Total time: 32030728
+Time Per Pixel: 86
+
+vertical -block-major
+Total time: 31405771
+Time Per Pixel: 84
+
+transpose -block-major
+Total time: 28920163
+Time Per Pixel: 77
+
+

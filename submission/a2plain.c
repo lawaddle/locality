@@ -45,7 +45,7 @@ typedef A2Methods_UArray2 A2;   /* private abbreviation */
  *      - Calls a CRE when size is less than 1
  *      - Calls a CRE if fails to allocate memory for the UArray2
  *      - Allocates memory for the UArray2 pointer and the subsequent UArray it
- *      holds. User is responsible for calling UArray2_free to free this memory.
+ *      holds. User is responsible for calling UArray2_free to free this memory
  *      
  ************************/
 static A2Methods_UArray2 new(int width, int height, int size)
@@ -80,7 +80,7 @@ static A2Methods_UArray2 new(int width, int height, int size)
  *      - Calls a CRE when size is less than 1
  *      - Calls a CRE if fails to allocate memory for the UArray2
  *      - Allocates memory for the UArray2 pointer and the subsequent UArray it
- *      holds. User is responsible for calling UArray2_free to free this memory.
+ *      holds. User is responsible for calling UArray2_free to free this memory
  *      
  ************************/
 static A2Methods_UArray2 new_with_blocksize(int width, int height, int size,
@@ -105,7 +105,8 @@ static A2Methods_UArray2 new_with_blocksize(int width, int height, int size,
  * Notes: 
  *      (done in the UArray2_free function called)
  *      - Calls CRE when uarray2 or *uarray2 is null
- *      - Frees the memory associated with the UArray2 including its pointer and
+ *      - Frees the memory associated with the UArray2 including its pointer 
+ * and
  *      the UArray within it.
  *      
  ************************/
@@ -168,7 +169,7 @@ static int height(A2 array2)
  *      A2 uarray2:      a pointer to the UArray2_T Struct representing
  *                      the UArray2 being accessed 
  *
- * Return: the memory size (number of bytes occupied) for an element in uarray2 
+ * Return: the memory size (number of bytes occupied) for an element in uarray2
  *
  * Expects: array2 to not be NULL
  *      
@@ -244,7 +245,8 @@ typedef void applyfun(int i, int j, UArray2_T array2, void *elem, void *cl);
  *                                      representing the UArray2 being accessed
  *
  *      A2Methods_applyfun (*apply):    a function pointer that represents the 
- *                                      function to be called on the elements of
+ *                                      function to be called on the elements 
+ * of
  *                                      uarray2. Since it is of type applyfun
  *                                      the compiler will know to check that 
  *                                      the function passed as the apply 
@@ -252,12 +254,15 @@ typedef void applyfun(int i, int j, UArray2_T array2, void *elem, void *cl);
  *      Expects the function passed in to be void and to take in 5 parameters:
  *              int column:             the column index of the current element
  *              int row:                the row index of the current element
- *              T uarray2:              a pointer to the uarray2 being traversed
+ *              T uarray2:              a pointer to the uarray2 being 
+ * traversed
  *              void *element:          the current element of the iteration
- *              void *cl:               a variable representing the closure that
+ *              void *cl:               a variable representing the closure 
+ * that
  *                                      can be updated during a given traversal
  *      
- *      void *cl:               a void pointer representing the closure which is
+ *      void *cl:               a void pointer representing the closure which 
+ * is
  *                              a variable that can be updated as one traverses
  *                              through the uarray2
  *
@@ -293,14 +298,18 @@ static void map_row_major(A2Methods_UArray2 uarray2,
  *                                      the function passed as the apply 
  *                                      function has the necessary parameters
  *      Expects the function passed in to be void and to take in 5 parameters:
- *              int column:             the column index of the current element
+ *              int column:             the column index of the current 
+ * element
  *              int row:                the row index of the current element
- *              T uarray2:              a pointer to the uarray2 being traversed
+ *              T uarray2:              a pointer to the uarray2 being 
+ * traversed
  *              void *element:          the current element of the iteration
- *              void *cl:               a variable representing the closure that
+ *              void *cl:               a variable representing the closure 
+ * that
  *                                      can be updated during a given traversal
  *      
- *      void *cl:               a void pointer representing the closure which is
+ *      void *cl:               a void pointer representing the closure which 
+ * is
  *                              a variable that can be updated as one traverses
  *                              through the uarray2
  *
@@ -351,7 +360,8 @@ static void apply_small(int i, int j, UArray2_T uarray2,
  *
  *      A2Methods_smallapplyfun (*apply):    
  *                                      a function pointer that represents the 
- *                                      function to be called on the elements of
+ *                                      function to be called on the elements 
+ * of
  *                                      uarray2. Since it is of type 
  *                                      smallapplyfun
  *                                      the compiler will know to check that 
@@ -359,10 +369,12 @@ static void apply_small(int i, int j, UArray2_T uarray2,
  *                                      function has the necessary parameters
  *      Expects the function passed in to be void and to take in 2 parameters:
  *              void *element:          the current element of the iteration
- *              void *cl:               a variable representing the closure that
+ *              void *cl:               a variable representing the closure 
+ * that
  *                                      can be updated during a given traversal
  *      
- *      void *cl:               a void pointer representing the closure which is
+ *      void *cl:               a void pointer representing the closure which 
+ * is
  *                              a variable that can be updated as one traverses
  *                              through the uarray2
  *
@@ -396,7 +408,8 @@ static void small_map_row_major(A2Methods_UArray2        a2,
  *
  *      A2Methods_smallapplyfun (*apply):    
  *                                      a function pointer that represents the 
- *                                      function to be called on the elements of
+ *                                      function to be called on the elements 
+ *                                      of
  *                                      uarray2. Since it is of type 
  *                                      smallapplyfun
  *                                      the compiler will know to check that 
@@ -404,7 +417,8 @@ static void small_map_row_major(A2Methods_UArray2        a2,
  *                                      function has the necessary parameters
  *      Expects the function passed in to be void and to take in 2 parameters:
  *              void *element:          the current element of the iteration
- *              void *cl:               a variable representing the closure that
+ *              void *cl:               a variable representing the closure 
+ * that
  *                                      can be updated during a given traversal
  *      
  *      void *cl:               a void pointer representing the closure which is

@@ -1,0 +1,92 @@
+## NAME: animals.jpg
+## SIZE: 22019 bytes
+### ROW MAJOR ###
+rotate 0 -row-major
+Total time: 1541
+Time Per Pixel: 0
+
+rotate 90 -row-major
+Total time: 6649378
+Time Per Pixel: 55
+
+rotate 270 -row-major
+Total time: 6809477
+Time Per Pixel: 57
+
+rotate 180 -row-major
+Total time: 7350146
+Time Per Pixel: 61
+
+horizontal -row-major
+Total time: 6765890
+Time Per Pixel: 56
+
+vertical -row-major
+Total time: 6512747
+Time Per Pixel: 54
+
+transpose -row-major
+Total time: 5867717
+Time Per Pixel: 49
+
+
+COL MAJOR
+rotate 0 -col-major
+Total time: 1072
+Time Per Pixel: 0
+
+rotate 90 -col-major
+Total time: 7105519
+Time Per Pixel: 59
+
+rotate 270 -col-major
+Total time: 7807021
+Time Per Pixel: 65
+
+rotate 180 -col-major
+Total time: 7885126
+Time Per Pixel: 66
+
+horizontal -col-major
+Total time: 7392179
+Time Per Pixel: 62
+
+vertical -col-major
+Total time: 7098871
+Time Per Pixel: 59
+
+transpose -col-major
+Total time: 9015813
+Time Per Pixel: 75
+
+
+BLOCK MAJOR
+rotate 0 -block-major
+Total time: 1410
+Time Per Pixel: 0
+
+rotate 90 -block-major
+Total time: 9446712
+Time Per Pixel: 79
+
+rotate 270 -block-major
+Total time: 9958810
+Time Per Pixel: 83
+
+rotate 180 -block-major
+Total time: 12325916
+Time Per Pixel: 103
+
+horizontal -block-major
+Total time: 10657842
+Time Per Pixel: 89
+
+vertical -block-major
+Total time: 14064789
+Time Per Pixel: 117
+
+transpose -block-major
+Total time: 13423857
+Time Per Pixel: 112
+
+

@@ -1,0 +1,92 @@
+## NAME: rock.jpg
+## SIZE: 138335 bytes
+### ROW MAJOR ###
+rotate 0 -row-major
+Total time: 1468
+Time Per Pixel: 0
+
+rotate 90 -row-major
+Total time: 28538639
+Time Per Pixel: 57
+
+rotate 270 -row-major
+Total time: 28759709
+Time Per Pixel: 58
+
+rotate 180 -row-major
+Total time: 29881868
+Time Per Pixel: 60
+
+horizontal -row-major
+Total time: 27269140
+Time Per Pixel: 55
+
+vertical -row-major
+Total time: 26439570
+Time Per Pixel: 53
+
+transpose -row-major
+Total time: 26518053
+Time Per Pixel: 53
+
+
+COL MAJOR
+rotate 0 -col-major
+Total time: 1432
+Time Per Pixel: 0
+
+rotate 90 -col-major
+Total time: 31548943
+Time Per Pixel: 63
+
+rotate 270 -col-major
+Total time: 32393668
+Time Per Pixel: 65
+
+rotate 180 -col-major
+Total time: 34233122
+Time Per Pixel: 69
+
+horizontal -col-major
+Total time: 32094068
+Time Per Pixel: 64
+
+vertical -col-major
+Total time: 30809039
+Time Per Pixel: 62
+
+transpose -col-major
+Total time: 27087282
+Time Per Pixel: 54
+
+
+BLOCK MAJOR
+rotate 0 -block-major
+Total time: 1031
+Time Per Pixel: 0
+
+rotate 90 -block-major
+Total time: 39565851
+Time Per Pixel: 79
+
+rotate 270 -block-major
+Total time: 41358840
+Time Per Pixel: 83
+
+rotate 180 -block-major
+Total time: 41911766
+Time Per Pixel: 84
+
+horizontal -block-major
+Total time: 40053628
+Time Per Pixel: 80
+
+vertical -block-major
+Total time: 38331661
+Time Per Pixel: 77
+
+transpose -block-major
+Total time: 35805105
+Time Per Pixel: 72
+
+

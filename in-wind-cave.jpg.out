@@ -1,0 +1,92 @@
+## NAME: in-wind-cave.jpg
+## SIZE: 92211 bytes
+### ROW MAJOR ###
+rotate 0 -row-major
+Total time: 1358
+Time Per Pixel: 0
+
+rotate 90 -row-major
+Total time: 20737657
+Time Per Pixel: 55
+
+rotate 270 -row-major
+Total time: 21177807
+Time Per Pixel: 57
+
+rotate 180 -row-major
+Total time: 23365166
+Time Per Pixel: 63
+
+horizontal -row-major
+Total time: 20569270
+Time Per Pixel: 55
+
+vertical -row-major
+Total time: 19814487
+Time Per Pixel: 53
+
+transpose -row-major
+Total time: 19349484
+Time Per Pixel: 52
+
+
+COL MAJOR
+rotate 0 -col-major
+Total time: 1215
+Time Per Pixel: 0
+
+rotate 90 -col-major
+Total time: 22867824
+Time Per Pixel: 61
+
+rotate 270 -col-major
+Total time: 25791491
+Time Per Pixel: 69
+
+rotate 180 -col-major
+Total time: 30891468
+Time Per Pixel: 83
+
+horizontal -col-major
+Total time: 24814651
+Time Per Pixel: 66
+
+vertical -col-major
+Total time: 26265104
+Time Per Pixel: 70
+
+transpose -col-major
+Total time: 21915286
+Time Per Pixel: 59
+
+
+BLOCK MAJOR
+rotate 0 -block-major
+Total time: 1324
+Time Per Pixel: 0
+
+rotate 90 -block-major
+Total time: 30791370
+Time Per Pixel: 82
+
+rotate 270 -block-major
+Total time: 33935120
+Time Per Pixel: 91
+
+rotate 180 -block-major
+Total time: 31948511
+Time Per Pixel: 85
+
+horizontal -block-major
+Total time: 30414792
+Time Per Pixel: 81
+
+vertical -block-major
+Total time: 29541957
+Time Per Pixel: 79
+
+transpose -block-major
+Total time: 27267160
+Time Per Pixel: 73
+
+

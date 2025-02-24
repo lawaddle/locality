@@ -9,23 +9,33 @@ Acknowledgements:
 - The many different TAs that have helped us (thank you so much).
 - Lectures and slides from Mark Sheldon and Noah Mendelsohn
 - Hanson quick reference C Interfaces and Implementations by David R. Hanson
-- Hannah Fiarman for helping Lawer with the Uarray2 implementation used throughout this proke
-- ChatGPT was a helpful resource when writing the bash script we used for making
+- Hannah Fiarman for helping Lawer with the Uarray2 implementation used 
+  throughout this project
+- ChatGPT was a helpful resource when writing the bash script we used for 
+making
   our timing files. 
 
 Implementation Completeness:
-UArray2b, a2plain, and ppmtrans complete for all of our tested cases
+UArray2b, a2plain, and ppmtrans complete for all of our tested cases.
 
 Architecture:
 UArray2b
 - Done using a uarray2 of uarrays where every uarray is a block
+- in our mapping function we used the mapping function from a uarray2. To pass
+  in multiple values for the closure (such as the orignal closure, the apply 
+  function, and a pointer to the array2b) of we used a struct
 
 a2plain
 - is a subclass of the virtual class A2Methods
     - allows us to have polymorphism and encapsulation
 
 ppmtrans
-- using the 
+- using the virtual class A2Methods allowed us polymorphism with the 
+  implementation
+- we used a similar struct design as we did in our UArray2b to send multiple 
+  values in as our closures for mapping functions. Notably we wanted to pass in
+  the new 2d array representing the ppm as part of the closure in order to 
+  handle mapping.
 
 
 
@@ -34,24 +44,9 @@ Each cell in the table is in the format:
 
 With the simplifying assumption that our computers execute 1,000,000,000 
 instructions per second (1 instruction per nanosecond), we can say that the
-time per pixel is roughly equal to the number of instructions per pixel for that
-transformation.
+time per pixel is roughly equal to the number of instructions per pixel for 
+that transformation.
 
-
-ANALYSIS OF TIMING RESULTS:
-
-        Initial observation of our results reveals that row-major mapping is 
-quicker per pixel than any of the other methods. Barring a single outlier in
-desert.jpg, row-major mapping had lower time per pixel for every type of 
-transformation. This is contrary to our initial expectations that block-major
-mapping would have advantages in 90/270 degree rotations. It is likely that our
-implementation of UArray2b is significantly slower compared to our simpler 
-UArray2 data types, leading to skewed results in favor of row-major and 
-col-major mapping methods. 
-        Our final ranking is that row-major is the best in all cases, 
-block-major is the second best when used on large files that can't fit a row in
-the cache. Col-major is the second best when used on images of small and medium
-sizes. And Col-major is the worst in large files by far.
 
 
 segfault.jpg - 80735 bytes
@@ -112,6 +107,22 @@ mobo.jpg - 6778640 bytes
 +-----------------+-----------------+------------------+-----------------+
 | transpose       | 3271540924 - 66 | 3649164470 - 73  | 3468075495 - 69 |
 +-----------------+-----------------+------------------+-----------------+
+
+ANALYSIS OF TIMING RESULTS:
+
+        Initial observation of our results reveals that row-major mapping is 
+quicker per pixel than any of the other methods. Barring a single outlier in
+desert.jpg, row-major mapping had lower time per pixel for every type of 
+transformation. This is contrary to our initial expectations that block-major
+mapping would have advantages in 90/270 degree rotations. It is likely that our
+implementation of UArray2b is significantly slower compared to our simpler 
+UArray2 data types, leading to skewed results in favor of row-major and 
+col-major mapping methods. 
+        Our final ranking is that row-major is the best in all cases, 
+block-major is the second best when used on large files that can't fit a row in
+the cache. Col-major is the second best when used on images of small and medium
+sizes. And Col-major is the worst in large files by far.
+
 
 Done on lawer's hailigan computer server
 

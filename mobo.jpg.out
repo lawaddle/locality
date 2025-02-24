@@ -1,0 +1,92 @@
+## NAME: mobo.jpg
+## SIZE: 6778640 bytes
+### ROW MAJOR ###
+rotate 0 -row-major
+Total time: 1403
+Time Per Pixel: 0
+
+rotate 90 -row-major
+Total time: 3203498629
+Time Per Pixel: 64
+
+rotate 270 -row-major
+Total time: 3404534818
+Time Per Pixel: 68
+
+rotate 180 -row-major
+Total time: 3036368112
+Time Per Pixel: 61
+
+horizontal -row-major
+Total time: 2773370845
+Time Per Pixel: 56
+
+vertical -row-major
+Total time: 2659832000
+Time Per Pixel: 53
+
+transpose -row-major
+Total time: 3271540924
+Time Per Pixel: 66
+
+
+COL MAJOR
+rotate 0 -col-major
+Total time: 1288
+Time Per Pixel: 0
+
+rotate 90 -col-major
+Total time: 5494754335
+Time Per Pixel: 110
+
+rotate 270 -col-major
+Total time: 5757936828
+Time Per Pixel: 115
+
+rotate 180 -col-major
+Total time: 4961845212
+Time Per Pixel: 99
+
+horizontal -col-major
+Total time: 4243016857
+Time Per Pixel: 85
+
+vertical -col-major
+Total time: 4538725710
+Time Per Pixel: 91
+
+transpose -col-major
+Total time: 3649164470
+Time Per Pixel: 73
+
+
+BLOCK MAJOR
+rotate 0 -block-major
+Total time: 1824
+Time Per Pixel: 0
+
+rotate 90 -block-major
+Total time: 3913977677
+Time Per Pixel: 78
+
+rotate 270 -block-major
+Total time: 4007029028
+Time Per Pixel: 80
+
+rotate 180 -block-major
+Total time: 4075442343
+Time Per Pixel: 82
+
+horizontal -block-major
+Total time: 3988801932
+Time Per Pixel: 80
+
+vertical -block-major
+Total time: 3752592242
+Time Per Pixel: 75
+
+transpose -block-major
+Total time: 3468075495
+Time Per Pixel: 69
+
+

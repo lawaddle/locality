@@ -1,4 +1,17 @@
-
+/**************************************************************
+ *
+ *                     ppmtrans.c
+ *
+ *     Assignment: locality
+ *     Authors:  Lawer Nyako (lnyako01) & Rigoberto Rodriguez-Anton (rrodri08)
+ *     Date:    2-20-25
+ *
+ *     Summary: Takes a ppm image and transforms it based on command line 
+ *      input. The user can decide if the transformation should be done using
+ *      row major, column major, or block major mapping allowing for different 
+ *      locality benefits.
+ *
+ **************************************************************/
 
 
 #include <stdio.h>
@@ -22,6 +35,7 @@ struct mappingCl {
 
 };
 
+/* Definition of transformation options used by main and transform */
 #define ZERO 0
 #define NINETY 90
 #define ONE_EIGHTY 180
@@ -42,80 +56,236 @@ struct mappingCl {
         }                                                       \
 } while (false)
 
+/********** usage ********
+ *
+ * Purpose:
+ *      Displays the correct usage of the program and exits with an error 
+ *      status. This function provides guidance on how to use the command-line 
+ *      arguments expected by the program. 
+ *
+ * Parameters:
+ *      const char *progname:     The name of the program.
+ *
+ * Return: 
+ *      N/A
+ *
+ * Notes:
+ *      - The usage message includes options for rotation angles, mapping 
+ *        methods, and optional timing file output.
+ *      - Calls exit(1) to terminate the program upon invocation, 
+ *        indicating an error.
+ *
+ ************************/
 static void
 usage(const char *progname)
 {
-        fprintf(stderr, "Usage: %s [-rotate <angle>] "
+        fprintf(stderr, "Usage: %s ([-rotate <angle>] OR [-transpose] OR "
+                        "[-flip <vertical,horizontal>]) "
                         "[-{row,col,block}-major] "
-		        "[-time time_file] "
-		        "[filename]\n",
+                        "[-time time_file] "
+                        "[filename]\n",
                         progname);
         exit(1);
 }
 
-void apply90(int i, int j, A2 array2b, void *elem, void *cl)
+/********** apply90 ********
+ *
+ * Rotates an image represented by a UArray2 structure by 90 degrees.
+ *
+ * Parameters:
+ *      int     i:              The current row in the original image.
+ *      int     j:              The current column in the original image.
+ *      A2      array2:         The UArray2 representing the original 
+ *                              image.
+ *      void    *elem:          A pointer to the current pixel's RGB value.
+ *      void    *cl:            A pointer to a structure containing necessary 
+ *                              context (e.g., methods and newMap).
+ *
+ * Return: 
+ *      N/A
+ *
+ * Preconditions:
+ *      - array2 must not be NULL.
+ *      - cl must not be NULL.
+ *      - elem must not be NULL.
+ *      - The contents of the cl struct must not be NULL.
+ *      - i must be a non-negative integer within the width of array2.
+ *      - j must be a non-negative integer within the height of array2.
+ *
+ * Notes: 
+ *      - Calls a CRE if any of the above preconditions are 
+ *        violated.
+ *      - Assumes the memory for newMap has been allocated and initialized 
+ *        correctly before this function is called.
+ *      - The user is responsible for calling UArray2b_free to free any 
+ *        allocated memory associated with the UArray2 structure.
+ *
+ ************************/
+void apply90(int i, int j, A2 array2, void *elem, void *cl)
 {
         assert(cl != NULL);
-        assert(array2b != NULL);
+        assert(array2 != NULL);
 
-        struct mappingCl *bundle = cl;
-        A2Methods_T methods = bundle->methods;
-        A2 newMap = bundle->newMap;
-        assert(methods != NULL);
-        assert(newMap != NULL);
-        assert(i >= 0 && i < methods->width(array2b));
-        assert(j >= 0 && j < methods->height(array2b));
-
-
-        struct Pnm_rgb *rgb = elem;
-        int height = methods->height(array2b);
-        *(struct Pnm_rgb *)methods->at(newMap, height - j - 1, i) 
-                                                       = *(struct Pnm_rgb *)rgb;
-}
-
-void apply180(int i, int j, A2 array2b, void *elem, void *cl)
-{
-        assert(cl != NULL);
-        assert(array2b != NULL);
-
-        struct mappingCl *bundle = cl;
-        A2Methods_T methods = bundle->methods;
-        A2 newMap = bundle->newMap;
-        assert(methods != NULL);
-        assert(newMap != NULL);
-        assert(i >= 0 && i < methods->width(array2b));
-        assert(j >= 0 && j < methods->height(array2b));
-
-        struct Pnm_rgb *rgb = elem;
-        int width = methods->width(array2b);
-        int height = methods->height(array2b);
-        *(struct Pnm_rgb *)methods->at(newMap, width - i - 1, height - j - 1)
-                                                       = *(struct Pnm_rgb *)rgb;
-}
-
-void apply270(int i, int j, A2 array2b, void *elem, void *cl)
-{
-        assert(cl != NULL);
-        assert(array2b != NULL);
-
-        struct mappingCl *bundle = cl;
-        A2Methods_T methods = bundle->methods;
-        A2 newMap = bundle->newMap;
-        assert(methods != NULL);
-        assert(newMap != NULL);
-        assert(i >= 0 && i < methods->width(array2b));
-        assert(j >= 0 && j < methods->height(array2b));
         
-        int width = methods->width(array2b);
+        struct mappingCl *bundle = cl;
+        A2Methods_T methods = bundle->methods;
+        A2 newMap = bundle->newMap;
+        assert(methods != NULL);
+        assert(newMap != NULL);
+        assert(i >= 0 && i < methods->width(array2));
+        assert(j >= 0 && j < methods->height(array2));
+
+        /* Rotate image 90 degrees clockwise. */
+        struct Pnm_rgb *rgb = elem;
+        int height = methods->height(array2);
+        *(struct Pnm_rgb *)methods->at(newMap, height - j - 1, i) 
+                                                      = *(struct Pnm_rgb *)rgb;
+}
+
+/********** apply180 ********
+ *
+ * Rotates an image represented by a UArray2 structure by 180 degrees.
+ *
+ * Parameters:
+ *      int     i:              The current row in the original image.
+ *      int     j:              The current column in the original image.
+ *      A2      array2:         The UArray2 representing the original 
+ *                              image.
+ *      void    *elem:          A pointer to the current pixel's RGB value.
+ *      void    *cl:            A pointer to a structure containing necessary 
+ *                              context (e.g., methods and newMap).
+ *
+ * Return: 
+ *      N/A
+ *
+ * Preconditions:
+ *      - array2 must not be NULL.
+ *      - cl must not be NULL.
+ *      - elem must not be NULL.
+ *      - The contents of the cl struct must not be NULL.
+ *      - i must be a non-negative integer within the width of array2.
+ *      - j must be a non-negative integer within the height of array2.
+ *
+ * Notes: 
+ *      - Calls a CRE if any of the above preconditions are 
+ *        violated.
+ *      - Assumes the memory for newMap has been allocated and initialized 
+ *        correctly before this function is called.
+ *      - The user is responsible for calling UArray2b_free to free any 
+ *        allocated memory associated with the UArray2 structure.
+ *
+ ************************/
+void apply180(int i, int j, A2 array2, void *elem, void *cl)
+{
+        assert(cl != NULL);
+        assert(array2 != NULL);
+
+        struct mappingCl *bundle = cl;
+        A2Methods_T methods = bundle->methods;
+        A2 newMap = bundle->newMap;
+        assert(methods != NULL);
+        assert(newMap != NULL);
+        assert(i >= 0 && i < methods->width(array2));
+        assert(j >= 0 && j < methods->height(array2));
+
+        /* Rotate image 180 degrees. */
+        struct Pnm_rgb *rgb = elem;
+        int width = methods->width(array2);
+        int height = methods->height(array2);
+        *(struct Pnm_rgb *)methods->at(newMap, width - i - 1, height - j - 1)
+                                                      = *(struct Pnm_rgb *)rgb;
+}
+
+/********** apply270 ********
+ *
+ * Rotates an image represented by a UArray2 structure by 270 degrees.
+ *
+ * Parameters:
+ *      int     i:              The current row in the original image.
+ *      int     j:              The current column in the original image.
+ *      A2      array2:         The UArray2 representing the original 
+ *                              image.
+ *      void    *elem:          A pointer to the current pixel's RGB value.
+ *      void    *cl:            A pointer to a structure containing necessary 
+ *                              context (e.g., methods and newMap).
+ *
+ * Return: 
+ *      N/A
+ *
+ * Preconditions:
+ *      - array2 must not be NULL.
+ *      - cl must not be NULL.
+ *      - elem must not be NULL.
+ *      - The contents of the cl struct must not be NULL.
+ *      - i must be a non-negative integer within the width of array2.
+ *      - j must be a non-negative integer within the height of array2.
+ *
+ * Notes: 
+ *      - Calls a CRE if any of the above preconditions are 
+ *        violated.
+ *      - Assumes the memory for newMap has been allocated and initialized 
+ *        correctly before this function is called.
+ *      - The user is responsible for calling UArray2b_free to free any 
+ *        allocated memory associated with the UArray2 structure.
+ *
+ ************************/
+void apply270(int i, int j, A2 array2, void *elem, void *cl)
+{
+        assert(cl != NULL);
+        assert(array2 != NULL);
+
+        struct mappingCl *bundle = cl;
+        A2Methods_T methods = bundle->methods;
+        A2 newMap = bundle->newMap;
+        assert(methods != NULL);
+        assert(newMap != NULL);
+        assert(i >= 0 && i < methods->width(array2));
+        assert(j >= 0 && j < methods->height(array2));
+        
+        /* Rotate image 270 degrees clockwise (or 90 ccw). */
+        int width = methods->width(array2);
         struct Pnm_rgb *rgb = elem;
         *(struct Pnm_rgb *)methods->at(newMap, j, width - i - 1)
-                                                       = *(struct Pnm_rgb *)rgb;
+                                                      = *(struct Pnm_rgb *)rgb;
 }
 
-void applyTranspose(int i, int j, A2 array2b, void *elem, void *cl)
+/********** applyTranspose ********
+ *
+ * Transposes and image represented by a UArray2 structure.
+ *
+ * Parameters:
+ *      int     i:              The current row in the original image.
+ *      int     j:              The current column in the original image.
+ *      A2      array2:         The UArray2 representing the original 
+ *                              image.
+ *      void    *elem:          A pointer to the current pixel's RGB value.
+ *      void    *cl:            A pointer to a structure containing necessary 
+ *                              context (e.g., methods and newMap).
+ *
+ * Return: 
+ *      N/A
+ *
+ * Preconditions:
+ *      - array2 must not be NULL.
+ *      - cl must not be NULL.
+ *      - elem must not be NULL.
+ *      - The contents of the cl struct must not be NULL.
+ *      - i must be a non-negative integer within the width of array2.
+ *      - j must be a non-negative integer within the height of array2.
+ *
+ * Notes: 
+ *      - Calls a CRE if any of the above preconditions are 
+ *        violated.
+ *      - Assumes the memory for newMap has been allocated and initialized 
+ *        correctly before this function is called.
+ *      - The user is responsible for calling UArray2b_free to free any 
+ *        allocated memory associated with the UArray2 structure.
+ *
+ ************************/
+void applyTranspose(int i, int j, A2 array2, void *elem, void *cl)
 {
         assert(cl != NULL);
-        assert(array2b != NULL);
+        assert(array2 != NULL);
         assert(elem != NULL);
 
         struct mappingCl *bundle = cl;
@@ -123,66 +293,178 @@ void applyTranspose(int i, int j, A2 array2b, void *elem, void *cl)
         A2 newMap = bundle->newMap;
         assert(methods != NULL);
         assert(newMap != NULL);
-        assert(i >= 0 && i < methods->width(array2b));
-        assert(j >= 0 && j < methods->height(array2b));
+        assert(i >= 0 && i < methods->width(array2));
+        assert(j >= 0 && j < methods->height(array2));
         
+        /* Transpose image (across UL-to-LR axis). */
         struct Pnm_rgb *rgb = elem;
         *(struct Pnm_rgb *)methods->at(newMap, j, i) = *(struct Pnm_rgb *)rgb;
 }
 
-void applyHorizontal(int i, int j, A2 array2b, void *elem, void *cl)
+/********** applyHorizontal ********
+ *
+ * Flips an image represented by a UArray2 structure horizontally.
+ *
+ * Parameters:
+ *      int     i:              The current row in the original image.
+ *      int     j:              The current column in the original image.
+ *      A2      array2:         The UArray2 representing the original 
+ *                              image.
+ *      void    *elem:          A pointer to the current pixel's RGB value.
+ *      void    *cl:            A pointer to a structure containing necessary 
+ *                              context (e.g., methods and newMap).
+ *
+ * Return: 
+ *      N/A
+ *
+ * Preconditions:
+ *      - array2 must not be NULL.
+ *      - cl must not be NULL.
+ *      - elem must not be NULL.
+ *      - The contents of the cl struct must not be NULL.
+ *      - i must be a non-negative integer within the width of array2.
+ *      - j must be a non-negative integer within the height of array2.
+ *
+ * Notes: 
+ *      - Calls a CRE if any of the above preconditions are 
+ *        violated.
+ *      - Assumes the memory for newMap has been allocated and initialized 
+ *        correctly before this function is called.
+ *      - The user is responsible for calling UArray2b_free to free any 
+ *        allocated memory associated with the UArray2 structure.
+ *
+ ************************/
+void applyHorizontal(int i, int j, A2 array2, void *elem, void *cl)
 {
         assert(cl != NULL);
-        assert(array2b != NULL);
+        assert(array2 != NULL);
 
         struct mappingCl *bundle = cl;
         A2Methods_T methods = bundle->methods;
         A2 newMap = bundle->newMap;
         assert(methods != NULL);
         assert(newMap != NULL);
-        assert(i >= 0 && i < methods->width(array2b));
-        assert(j >= 0 && j < methods->height(array2b));
+        assert(i >= 0 && i < methods->width(array2));
+        assert(j >= 0 && j < methods->height(array2));
 
-
+        /* Mirror image horizontally (lef-right). */
         struct Pnm_rgb *rgb = elem;
-        int height = methods->height(array2b);
+        int height = methods->height(array2);
         *(struct Pnm_rgb *)methods->at(newMap, i, height - j - 1)
-                                                       = *(struct Pnm_rgb *)rgb;
+                                                      = *(struct Pnm_rgb *)rgb;
 }
 
-void applyVertical(int i, int j, A2 array2b, void *elem, void *cl)
+/********** applyVertical ********
+ *
+ * Flips an image represented by a UArray2 structure horizontally.
+ *
+ * Parameters:
+ *      int     i:              The current row in the original image.
+ *      int     j:              The current column in the original image.
+ *      A2      array2:         The UArray2 representing the original 
+ *                              image.
+ *      void    *elem:          A pointer to the current pixel's RGB value.
+ *      void    *cl:            A pointer to a structure containing necessary 
+ *                              context (e.g., methods and newMap).
+ *
+ * Return: 
+ *      N/A
+ *
+ * Preconditions:
+ *      - array2 must not be NULL.
+ *      - cl must not be NULL.
+ *      - elem must not be NULL.
+ *      - The contents of the cl struct must not be NULL.
+ *      - i must be a non-negative integer within the width of array2.
+ *      - j must be a non-negative integer within the height of array2.
+ *
+ * Notes: 
+ *      - Calls a CRE if any of the above preconditions are 
+ *        violated.
+ *      - Assumes the memory for newMap has been allocated and initialized 
+ *        correctly before this function is called.
+ *      - The user is responsible for calling UArray2b_free to free any 
+ *        allocated memory associated with the UArray2 structure.
+ *
+ ************************/
+void applyVertical(int i, int j, A2 array2, void *elem, void *cl)
 {
         assert(cl != NULL);
-        assert(array2b != NULL);
+        assert(array2 != NULL);
 
         struct mappingCl *bundle = cl;
         A2Methods_T methods = bundle->methods;
         A2 newMap = bundle->newMap;
         assert(methods != NULL);
         assert(newMap != NULL);
-        assert(i >= 0 && i < methods->width(array2b));
-        assert(j >= 0 && j < methods->height(array2b));
+        assert(i >= 0 && i < methods->width(array2));
+        assert(j >= 0 && j < methods->height(array2));
 
-
+        /* Mirror image vertically (top-bottom). */
         struct Pnm_rgb *rgb = elem;
-        int width = methods->width(array2b);
+        int width = methods->width(array2);
         *(struct Pnm_rgb *)methods->at(newMap, width - i - 1, j)
-                                                       = *(struct Pnm_rgb *)rgb;
+                                                      = *(struct Pnm_rgb *)rgb;
 }
 
+/********** transform ********
+ *
+ *      The transform function applies various transformations (e.g., 
+ *      rotation, transposition, horizontal and vertical flipping) to a Pnm_ppm
+ *      image. 
+ *
+ * Parameters:
+ *      Pnm_ppm                 ppmMap:         The Pnm_ppm structure 
+ *                                              representing the image.
+ *      int                     transformation: The type of transformation to 
+ *                                              apply (e.g., NINETY, ONE_EIGHTY,
+                                                etc.).
+ *      A2Methods_mapfun        *map:           A pointer to the mapping 
+ *                                              function for applying 
+ *                                              transformations.
+ *      A2Methods_T             methods:        A structure containing methods 
+ *                                              for manipulating the UArray2.
+ *
+ * Return: 
+ *      Pnm_ppm: A pointer to the transformed Pnm_ppm structure.
+ *
+ * Preconditions:
+ *      - ppmMap must not be NULL.
+ *      - map must not be NULL, and the function it points to must not be 
+ *        NULL.
+ *      - methods must not be NULL.
+ *
+ * Notes: 
+ *      - If the transformation is ZERO, the original ppmMap is returned 
+ *        without modification.
+ *      - Memory for the new UArray2 is allocated and initialized based on the 
+ *        dimensions of the original image and the type of transformation to be
+ *        performed.
+ *      - The user is responsible for freeing the memory of the original 
+ *        ppmMap after use.
+ *
+ ************************/
 Pnm_ppm transform(Pnm_ppm ppmMap, int transformation, A2Methods_mapfun *map, 
-                                                            A2Methods_T methods)
+                                                           A2Methods_T methods)
 {
         assert(methods != NULL);
         assert(map != NULL);
         assert(*map != NULL);
         assert(ppmMap != NULL);
         
+        /* 
+         * Separately handles a rotation of 0 degrees by simply returning the
+         * original image.
+         */
         if (transformation == ZERO) {
                 return ppmMap;
         }
         int newHeight = methods->height(ppmMap->pixels);
         int newWidth = methods->width(ppmMap->pixels);
+        /* 
+         * Changes the dimensions of the destination array if required based on
+         * the type of transformation. 
+         */
         if (transformation == NINETY || 
             transformation == TWO_SEVENTY || 
             transformation == TRANSPOSE) {
@@ -192,7 +474,8 @@ Pnm_ppm transform(Pnm_ppm ppmMap, int transformation, A2Methods_mapfun *map,
         
         A2 newMap = methods->new(newWidth, newHeight, sizeof(struct Pnm_rgb));
         struct mappingCl bundle = {newMap, methods};
-        
+
+        /* These if statements determine which apply function will be used. */
         if (transformation == NINETY) {
                 map(ppmMap->pixels, apply90, &bundle);
         } else if (transformation == ONE_EIGHTY) {
@@ -214,6 +497,31 @@ Pnm_ppm transform(Pnm_ppm ppmMap, int transformation, A2Methods_mapfun *map,
         return ppmMap;
 }
 
+/********** main ********
+ *
+ *      main manages the inputs and outputs of the ppmtrans program, parsing
+ *      flags and parameters, and executing accordingly
+ *
+ * Parameters:
+ *      int   argc:     The number of command-line arguments.
+ *      char *argv[]:   An array of command-line argument strings.
+ *
+ * Return: 
+ *      int: Returns EXIT_SUCCESS (0) on successful execution. Returns 
+ *      EXIT_FAILURE (1) if the usage was invalid.
+ *
+ * Preconditions:
+ *      - Command-line arguments must be properly formatted.
+ *      - Input file must be a valid Pnm_ppm file if specified.
+ *
+ * Notes:
+ *      - 
+ *      - Handles various command-line options for transformations and methods.
+ *      - Ensures memory is freed for the original Pnm_ppm structure.
+ *      - If the output file is not specified, it uses standard input.
+ *      - Logs execution time if a timing file is provided.
+ *
+ ************************/
 int main(int argc, char *argv[])
 {
         char *time_file_name = NULL;
@@ -270,7 +578,7 @@ int main(int argc, char *argv[])
                                 transformation = VERTICAL;
                         } else {
                                 fprintf(stderr, 
-                                   "flip must be 'horizontal' or 'vertical'\n");
+                                  "flip must be 'horizontal' or 'vertical'\n");
                                 usage(argv[0]);
                         }
                 } else if (strcmp(argv[i], "-time") == 0) {
@@ -303,19 +611,29 @@ int main(int argc, char *argv[])
         Pnm_ppm ppmMap = Pnm_ppmread(fp, methods);
         fclose(fp);
 
+        /* 
+         * start timer after ppmMap is made and the image is read and before 
+         * transforming happens 
+         */
         CPUTime_T timer = CPUTime_New();
         CPUTime_Start(timer);
-        Pnm_ppm rotated = transform(ppmMap, transformation, map, methods);
+        Pnm_ppm transformed = transform(ppmMap, transformation, map, methods);
         double cputime = CPUTime_Stop(timer);
-        Pnm_ppmwrite(stdout, rotated);
+        /* 
+         * stop timer after transformation and before writing the 
+         * transformed ppm to stdout 
+         */
+        Pnm_ppmwrite(stdout, transformed);
         double pixelTime = cputime / (ppmMap->width * ppmMap->height);
         CPUTime_Free(&timer);
         
+        /* Only writes the time data to a file if the -time flag was used. */
         if (time_file_name != NULL) {
                 fp = fopen(time_file_name, "w");
                 assert(fp != NULL);
-                fprintf(fp, "Total time: %.0f\nTime Per Pixel: %.0f\n", cputime, 
-                                                                     pixelTime);
+                fprintf(fp, "Total time: %.0f\nTime Per Pixel: %.0f\n", 
+                                                                cputime,
+                                                                pixelTime);
                 fclose(fp);
         }
 

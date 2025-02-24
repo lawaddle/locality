@@ -1,0 +1,92 @@
+## NAME: segfault.jpg
+## SIZE: 80735 bytes
+### ROW MAJOR ###
+rotate 0 -row-major
+Total time: 1000
+Time Per Pixel: 0
+
+rotate 90 -row-major
+Total time: 48809889
+Time Per Pixel: 59
+
+rotate 270 -row-major
+Total time: 48079632
+Time Per Pixel: 59
+
+rotate 180 -row-major
+Total time: 48186390
+Time Per Pixel: 59
+
+horizontal -row-major
+Total time: 44531423
+Time Per Pixel: 54
+
+vertical -row-major
+Total time: 42662098
+Time Per Pixel: 52
+
+transpose -row-major
+Total time: 44151997
+Time Per Pixel: 54
+
+
+COL MAJOR
+rotate 0 -col-major
+Total time: 1323
+Time Per Pixel: 0
+
+rotate 90 -col-major
+Total time: 54653708
+Time Per Pixel: 67
+
+rotate 270 -col-major
+Total time: 56421043
+Time Per Pixel: 69
+
+rotate 180 -col-major
+Total time: 61121119
+Time Per Pixel: 74
+
+horizontal -col-major
+Total time: 55443007
+Time Per Pixel: 67
+
+vertical -col-major
+Total time: 55136758
+Time Per Pixel: 67
+
+transpose -col-major
+Total time: 47503734
+Time Per Pixel: 58
+
+
+BLOCK MAJOR
+rotate 0 -block-major
+Total time: 1543
+Time Per Pixel: 0
+
+rotate 90 -block-major
+Total time: 63734549
+Time Per Pixel: 78
+
+rotate 270 -block-major
+Total time: 69017507
+Time Per Pixel: 84
+
+rotate 180 -block-major
+Total time: 68451087
+Time Per Pixel: 83
+
+horizontal -block-major
+Total time: 65693194
+Time Per Pixel: 80
+
+vertical -block-major
+Total time: 62465117
+Time Per Pixel: 76
+
+transpose -block-major
+Total time: 59315141
+Time Per Pixel: 72
+
+
